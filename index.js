@@ -15,19 +15,27 @@ $(document).ready(function() {
     }
 
     // Parses a dice string like "XdY+Z" and returns the roll.
-    function rollDice(diceString) {
-        const match = diceString.match(/(\d+)d(\d+)(?:\+(\d+))?/);
-        if (!match) return 0;
+    function parseDiceString(diceString) {
+        const match = diceString.match(/(\d+)d(\d+)(?:\\+(\d+))?/);
+        if (!match) return null;
 
-        const numDice = parseInt(match[1], 10);
-        const dieType = parseInt(match[2], 10);
-        const modifier = match[3] ? parseInt(match[3], 10) : 0;
+        return {
+            numDice: parseInt(match[1], 10),
+            dieType: parseInt(match[2], 10),
+            modifier: match[3] ? parseInt(match[3], 10) : 0
+        };
+    }
+
+    // Parses a dice string like "XdY+Z" and returns the roll.
+    function rollDice(diceString) {
+        const dice = parseDiceString(diceString);
+        if (!dice) return 0;
 
         let total = 0;
-        for (let i = 0; i < numDice; i++) {
-            total += Math.floor(Math.random() * dieType) + 1;
+        for (let i = 0; i < dice.numDice; i++) {
+            total += Math.floor(Math.random() * dice.dieType) + 1;
         }
-        return total + modifier;
+        return total + dice.modifier;
     }
 
     // Renders the mobs in the table
@@ -202,6 +210,7 @@ $(document).ready(function() {
 
         let totalDamage = 0;
         const attackResults = [];
+        const damageDice = parseDiceString(mob.damagePerAttack);
 
         for (let i = 0; i < mob.numAlive; i++) {
             for (let j = 0; j < mob.attacksPerCreature; j++) {
@@ -230,6 +239,8 @@ $(document).ready(function() {
 
         const resultText = `
             <p>${hits} hits!</p>
+            <p>Attack: 1d20+${mob.attackModifier}</p>
+            <p>Damage: ${mob.damagePerAttack}</p>
             <p>Attack rolls: ${attackRollsText}</p>
             <p>Total damage: ${totalDamage}</p>
         `;
