@@ -1,6 +1,19 @@
 $(document).ready(function() {
     let mobs = [];
 
+    // Save state to local storage
+    function saveState() {
+        localStorage.setItem('mobs', JSON.stringify(mobs));
+    }
+
+    // Load state from local storage
+    function loadState() {
+        const savedMobs = localStorage.getItem('mobs');
+        if (savedMobs) {
+            mobs = JSON.parse(savedMobs);
+        }
+    }
+
     // Parses a dice string like "XdY+Z" and returns the roll.
     function rollDice(diceString) {
         const match = diceString.match(/(\d+)d(\d+)(?:\+(\d+))?/);
@@ -33,6 +46,7 @@ $(document).ready(function() {
                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded deal-damage-btn">Damage</button>
                         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded saving-throw-btn">Save</button>
                         <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded attack-btn">Attack</button>
+                        <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded remove-mob-btn">Remove</button>
                     </td>
                 </tr>
             `;
@@ -66,13 +80,20 @@ $(document).ready(function() {
         };
 
         mobs.push(newMob);
+        saveState();
         renderMobs();
 
         // Clear the form
         $('#mob-form')[0].reset();
     });
 
-    // Placeholder for future modal functionality
+    // Handle remove mob button click
+    $('#mobs-table-body').on('click', '.remove-mob-btn', function() {
+        const mobIndex = $(this).closest('tr').data('mob-index');
+        mobs.splice(mobIndex, 1);
+        saveState();
+        renderMobs();
+    });
 
     // Deal Damage Modal
     const $damageModal = $('#damage-modal');
@@ -108,6 +129,7 @@ $(document).ready(function() {
         }
 
         mob.numAlive = mob.healths.filter(h => h > 0).length;
+        saveState();
         $damageModal.addClass('hidden');
         $('#damage-amount').val('');
         renderMobs();
@@ -178,38 +200,43 @@ $(document).ready(function() {
             return;
         }
 
-        let hits = 0;
         let totalDamage = 0;
-        const damageRolls = [];
+        const attackResults = [];
 
         for (let i = 0; i < mob.numAlive; i++) {
             for (let j = 0; j < mob.attacksPerCreature; j++) {
                 let roll1 = Math.floor(Math.random() * 20) + 1;
                 let roll2 = Math.floor(Math.random() * 20) + 1;
-                let attackRoll;
+                let attackRollValue;
 
                 if (rollType === 'advantage') {
-                    attackRoll = Math.max(roll1, roll2);
+                    attackRollValue = Math.max(roll1, roll2);
                 } else if (rollType === 'disadvantage') {
-                    attackRoll = Math.min(roll1, roll2);
+                    attackRollValue = Math.min(roll1, roll2);
                 } else {
-                    attackRoll = roll1;
+                    attackRollValue = roll1;
                 }
 
-                if (attackRoll + mob.attackModifier >= targetAC) {
-                    hits++;
+                if (attackRollValue + mob.attackModifier >= targetAC) {
                     const damage = rollDice(mob.damagePerAttack);
-                    damageRolls.push(damage);
+                    attackResults.push({ roll: attackRollValue, damage: damage });
                     totalDamage += damage;
                 }
             }
         }
 
+        const hits = attackResults.length;
+        const attackRollsText = attackResults.map(r => `${r.roll} (${r.damage})`).join(', ');
+
         const resultText = `
             <p>${hits} hits!</p>
-            <p>Damage rolls: ${damageRolls.join(', ')}</p>
+            <p>Attack rolls: ${attackRollsText}</p>
             <p>Total damage: ${totalDamage}</p>
         `;
         $('#attack-result').html(resultText);
     });
+
+    // Initial load
+    loadState();
+    renderMobs();
 });
