@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mob Initiative and Combat Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-gray-800 text-white">
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Mob Initiative and Combat Calculator</h1>
+
+        <!-- Mob Creator Form -->
+        <div id="mob-creator" class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Create a Mob</h2>
+            <form id="mob-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="creature" class="block mb-2">Creature</label>
+                    <input type="text" id="creature" name="creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="num-alive" class="block mb-2">Num Alive</label>
+                    <input type="number" id="num-alive" name="num-alive" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+2)</label>
+                    <input type="text" id="health-per-creature" name="health-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="attack-modifier" class="block mb-2">Attack Modifier</label>
+                    <input type="number" id="attack-modifier" name="attack-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="attacks-per-creature" class="block mb-2">Attacks Per Creature</label>
+                    <input type="number" id="attacks-per-creature" name="attacks-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="damage-per-attack" class="block mb-2">Damage Per Attack (e.g., 1d10+3)</label>
+                    <input type="text" id="damage-per-attack" name="damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div class="md:col-span-2">
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Mob</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Calculation Table -->
+        <div id="calculation-table">
+            <h2 class="text-2xl font-bold mb-4">Mobs</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-gray-900">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-700">Creature</th>
+                            <th class="py-2 px-4 border-b border-gray-700">Num Alive</th>
+                            <th class="py-2 px-4 border-b border-gray-700">Health</th>
+                            <th class="py-2 px-4 border-b border-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mobs-table-body">
+                        <!-- Mob rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+
+    <!-- Damage Modal -->
+    <div id="damage-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Deal Damage</h2>
+            <div class="mb-4">
+                <label for="damage-amount" class="block mb-2">Damage Amount</label>
+                <input type="number" id="damage-amount" name="damage-amount" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+            </div>
+            <div class="flex justify-end">
+                <button id="cancel-damage" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
+                <button id="apply-damage" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Apply Damage</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving Throw Modal -->
+    <div id="saving-throw-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Saving Throw</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="save-modifier" class="block mb-2">Save Modifier</label>
+                    <input type="number" id="save-modifier" name="save-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="save-dc" class="block mb-2">Save DC</label>
+                    <input type="number" id="save-dc" name="save-dc" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+            </div>
+            <div id="saving-throw-result" class="mb-4"></div>
+            <div class="flex justify-end">
+                <button id="close-saving-throw" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Close</button>
+                <button id="roll-saving-throw" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Roll Saves</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attack Modal -->
+    <div id="attack-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-1/3">
+            <h2 class="text-2xl font-bold mb-4">Attack</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="attack-ac" class="block mb-2">Target AC</label>
+                    <input type="number" id="attack-ac" name="attack-ac" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label for="roll-type" class="block mb-2">Roll Type</label>
+                    <select id="roll-type" name="roll-type" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                        <option value="normal">Normal</option>
+                        <option value="advantage">Advantage</option>
+                        <option value="disadvantage">Disadvantage</option>
+                    </select>
+                </div>
+            </div>
+            <div id="attack-result" class="mb-4"></div>
+            <div class="flex justify-end">
+                <button id="close-attack" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Close</button>
+                <button id="roll-attack" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Roll Attack</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
