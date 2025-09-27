@@ -221,7 +221,9 @@ $(document).ready(function() {
     const $attackModal = $('#attack-modal');
     $('#mobs-table-body').on('click', '.attack-btn', function() {
         const mobIndex = $(this).closest('tr').data('mob-index');
+        const mob = mobs[mobIndex];
         $attackModal.data('mob-index', mobIndex);
+        $('#attack-num-stunned').val(mob.numStunned || 0);
         $('#attack-result').empty();
         $attackModal.removeClass('hidden');
     });
@@ -238,6 +240,9 @@ $(document).ready(function() {
         const mob = mobs[mobIndex];
         const targetAC = parseInt($('#attack-ac').val(), 10);
         const rollType = $('#roll-type').val();
+        const numStunned = parseInt($('#attack-num-stunned').val(), 10) || 0;
+
+        mob.numStunned = numStunned;
 
         if (isNaN(targetAC)) {
             $('#attack-result').text('Please enter a valid AC.');
@@ -249,6 +254,7 @@ $(document).ready(function() {
         const damageDice = parseDiceString(mob.damagePerAttack);
 
         const numAttacking = mob.numAlive - (mob.numStunned || 0);
+        const totalAttacks = numAttacking * mob.attacksPerCreature;
 
         for (let i = 0; i < numAttacking; i++) {
             for (let j = 0; j < mob.attacksPerCreature; j++) {
@@ -276,13 +282,15 @@ $(document).ready(function() {
         const attackRollsText = attackResults.map(r => `${r.roll} (${r.damage})`).join(', ');
 
         const resultText = `
-            <p>${hits} hits!</p>
+            <p>${hits}/${totalAttacks} hits!</p>
             <p>Attack: 1d20+${mob.attackModifier}</p>
             <p>Damage: ${mob.damagePerAttack}</p>
             <p>Attack rolls: ${attackRollsText}</p>
             <p>Total damage: ${totalDamage}</p>
         `;
         $('#attack-result').html(resultText);
+        saveState();
+        renderMobs();
     });
 
     // Edit Mob Modal
