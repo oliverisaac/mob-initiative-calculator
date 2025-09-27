@@ -82,6 +82,7 @@
             <div class="mb-4">
                 <label for="damage-amount" class="block mb-2">Damage Amount</label>
                 <input type="number" id="damage-amount" name="damage-amount" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                <p class="text-sm text-gray-400 mt-2">Damage is removed from each creature in subsequent order. E.g. the first creature will be reduced to 0 hit points, then then 2nd, and so-on.</p>
             </div>
             <div class="flex justify-end">
                 <button id="cancel-damage" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
@@ -197,6 +198,7 @@
             <div class="mb-4">
                 <label for="num-stunned" class="block mb-2">Num Stunned</label>
                 <input type="number" id="num-stunned" name="num-stunned" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                <p class="text-sm text-gray-400 mt-2">When creatures are stunned they will not be included in the attack.</p>
             </div>
             <div class="flex justify-end">
                 <button id="cancel-mark-stunned" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
