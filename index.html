@@ -22,28 +22,28 @@
             <h2 class="text-2xl font-bold mb-4">Create a Mob</h2>
             <form id="mob-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label for="creature" class="block mb-2">Creature</label>
-                    <input type="text" id="creature" name="creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <label for="creature" class="block mb-2">Creature Name</label>
+                    <input type="text" id="creature" placeholder="Zombies" name="creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="num-alive" class="block mb-2">Num Alive</label>
-                    <input type="number" id="num-alive" name="num-alive" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="num-alive" placeholder="20" name="num-alive" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
-                    <label for="health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+2)</label>
-                    <input type="text" id="health-per-creature" name="health-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <label for="health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+3)</label>
+                    <input type="text" id="health-per-creature" placeholder="2d8+3" name="health-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="attack-modifier" class="block mb-2">Attack Modifier</label>
-                    <input type="number" id="attack-modifier" name="attack-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="attack-modifier" placeholder="6" name="attack-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="attacks-per-creature" class="block mb-2">Attacks Per Creature</label>
-                    <input type="number" id="attacks-per-creature" name="attacks-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="attacks-per-creature" placeholder="1" name="attacks-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="damage-per-attack" class="block mb-2">Damage Per Attack (e.g., 1d10+3)</label>
-                    <input type="text" id="damage-per-attack" name="damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="text" id="damage-per-attack" placeholder="1d10+3" name="damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div class="md:col-span-2">
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Mob</button>
