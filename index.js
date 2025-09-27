@@ -54,6 +54,7 @@ $(document).ready(function() {
                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded deal-damage-btn">Damage</button>
                         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded saving-throw-btn">Save</button>
                         <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded attack-btn">Attack</button>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded edit-mob-btn">Edit</button>
                         <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded remove-mob-btn">Remove</button>
                     </td>
                 </tr>
@@ -82,6 +83,7 @@ $(document).ready(function() {
             creature,
             numAlive,
             healths,
+            healthPerCreature,
             attackModifier,
             attacksPerCreature,
             damagePerAttack
@@ -245,6 +247,50 @@ $(document).ready(function() {
             <p>Total damage: ${totalDamage}</p>
         `;
         $('#attack-result').html(resultText);
+    });
+
+    // Edit Mob Modal
+    const $editMobModal = $('#edit-mob-modal');
+    $('#mobs-table-body').on('click', '.edit-mob-btn', function() {
+        const mobIndex = $(this).closest('tr').data('mob-index');
+        const mob = mobs[mobIndex];
+
+        $editMobModal.data('mob-index', mobIndex);
+        $('#edit-creature').val(mob.creature);
+        $('#edit-num-alive').val(mob.numAlive);
+        $('#edit-health-per-creature').val(mob.healthPerCreature);
+        $('#edit-attack-modifier').val(mob.attackModifier);
+        $('#edit-attacks-per-creature').val(mob.attacksPerCreature);
+        $('#edit-damage-per-attack').val(mob.damagePerAttack);
+        $('#edit-healths').val(mob.healths.join(', '));
+
+        $editMobModal.removeClass('hidden');
+    });
+
+    $('#cancel-edit-mob').on('click', function() {
+        $editMobModal.addClass('hidden');
+    });
+
+    $('#edit-mob-form').on('submit', function(event) {
+        event.preventDefault();
+
+        const mobIndex = $editMobModal.data('mob-index');
+        const mob = mobs[mobIndex];
+
+        mob.creature = $('#edit-creature').val();
+        mob.numAlive = parseInt($('#edit-num-alive').val(), 10);
+        mob.attackModifier = parseInt($('#edit-attack-modifier').val(), 10);
+        mob.attacksPerCreature = parseInt($('#edit-attacks-per-creature').val(), 10);
+        mob.damagePerAttack = $('#edit-damage-per-attack').val();
+        
+        const healthsString = $('#edit-healths').val();
+        mob.healths = healthsString.split(',').map(h => parseInt(h.trim(), 10));
+
+        mob.numAlive = mob.healths.filter(h => h > 0).length;
+
+        saveState();
+        renderMobs();
+        $editMobModal.addClass('hidden');
     });
 
     // Initial load

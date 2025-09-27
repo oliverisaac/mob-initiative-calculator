@@ -1,1 +1,1 @@
-- [x] Update the attack display modal so that when I submit the attack form it runs the calculation. In the result of the calculation, add the dice kind of the attack as well as the dice kind of the damage.
+- [x] Add a way to edit an existing mob. Use a modal so I can edit the mob, the health of the creatures, and the damage

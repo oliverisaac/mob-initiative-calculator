@@ -137,5 +137,48 @@
         </div>
     </div>
 
+    <!-- Edit Mob Modal -->
+    <div id="edit-mob-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Edit Mob</h2>
+            <form id="edit-mob-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="edit-creature" class="block mb-2">Creature</label>
+                        <input type="text" id="edit-creature" name="edit-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="edit-num-alive" class="block mb-2">Num Alive</label>
+                        <input type="number" id="edit-num-alive" name="edit-num-alive" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="edit-health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+2)</label>
+                        <input type="text" id="edit-health-per-creature" name="edit-health-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2" disabled>
+                    </div>
+                    <div>
+                        <label for="edit-attack-modifier" class="block mb-2">Attack Modifier</label>
+                        <input type="number" id="edit-attack-modifier" name="edit-attack-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="edit-attacks-per-creature" class="block mb-2">Attacks Per Creature</label>
+                        <input type="number" id="edit-attacks-per-creature" name="edit-attacks-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="edit-damage-per-attack" class="block mb-2">Damage Per Attack (e.g., 1d10+3)</label>
+                        <input type="text" id="edit-damage-per-attack" name="edit-damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="edit-healths" class="block mb-2">Healths (comma-separated)</label>
+                        <input type="text" id="edit-healths" name="edit-healths" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    </div>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button type="button" id="cancel-edit-mob" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
+                    <button type="submit" id="save-mob-changes" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>
