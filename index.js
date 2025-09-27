@@ -16,25 +16,29 @@ $(document).ready(function() {
 
     // Parses a dice string like "XdY+Z" and returns the roll.
     function parseDiceString(diceString) {
-        const match = diceString.match(/(\d+)d(\d+)(?:\+(\d+))?/);
+        const match = diceString.match(/(\d+)d(\d+)([+-](\d+))?/);
         if (!match) return null;
 
         return {
             numDice: parseInt(match[1], 10),
             dieType: parseInt(match[2], 10),
-            modifier: match[4] ? parseInt(match[4], 10) : 0
+            modifier: match[3] ? parseInt(match[3], 10) : 0
         };
     }
 
     // Parses a dice string like "XdY+Z" and returns the roll.
     function rollDice(diceString) {
+        let rolls = []
         const dice = parseDiceString(diceString);
         if (!dice) return 0;
 
-        let total = 0;
         for (let i = 0; i < dice.numDice; i++) {
-            total += Math.floor(Math.random() * dice.dieType) + 1;
+            rolls.push(Math.floor(Math.random() * dice.dieType) + 1);
         }
+        let total = rolls.reduce((previous, current) => {
+          return previous + current 
+        }, 0)
+        console.debug(`Rolled ${diceString}: ${rolls} + ${dice.modifier}`)
         return total + dice.modifier;
     }
 
