@@ -2,3 +2,4 @@
 - [x] when you calcualte the damage make sure to add the damagne modifier. E..g 1d6+5 should add 5 points of damage to the d6 that was rolled
 - [x] In the edit modal, add a re-roll button so that I cna re-roll the health of the creatures
 - [x] Update the modals so that they work well on smaller screens. They are too small and cramped when I open them in a narrow window
+- [x] Add a field to each mob that allows me to mark how many of the creatures are stunned. If a creature is stunned it is not able to attack. Add the "Num Stunned" field to the edit modal so I can set it. Add a "Mark stunned" button to the actions button

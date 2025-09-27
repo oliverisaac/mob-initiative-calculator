@@ -53,10 +53,12 @@ $(document).ready(function() {
                 <tr data-mob-index="${index}">
                     <td class="py-2 px-4 border-b border-gray-700">${mob.creature}</td>
                     <td class="py-2 px-4 border-b border-gray-700">${mob.numAlive}</td>
+                    <td class="py-2 px-4 border-b border-gray-700">${mob.numStunned || 0}</td>
                     <td class="py-2 px-4 border-b border-gray-700">${healthDisplay}</td>
                     <td class="py-2 px-4 border-b border-gray-700">
                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded deal-damage-btn">Damage</button>
                         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded saving-throw-btn">Save</button>
+                        <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded mark-stunned-btn">Mark Stunned</button>
                         <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded attack-btn">Attack</button>
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded edit-mob-btn">Edit</button>
                         <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded remove-mob-btn">Remove</button>
@@ -90,7 +92,8 @@ $(document).ready(function() {
             healthPerCreature,
             attackModifier,
             attacksPerCreature,
-            damagePerAttack
+            damagePerAttack,
+            numStunned: 0
         };
 
         mobs.push(newMob);
@@ -146,6 +149,33 @@ $(document).ready(function() {
         saveState();
         $damageModal.addClass('hidden');
         $('#damage-amount').val('');
+        renderMobs();
+    });
+
+    // Mark Stunned Modal
+    const $markStunnedModal = $('#mark-stunned-modal');
+    $('#mobs-table-body').on('click', '.mark-stunned-btn', function() {
+        const mobIndex = $(this).closest('tr').data('mob-index');
+        const mob = mobs[mobIndex];
+        $markStunnedModal.data('mob-index', mobIndex);
+        $('#num-stunned').val(mob.numStunned || 0);
+        $markStunnedModal.removeClass('hidden');
+    });
+
+    $('#cancel-mark-stunned').on('click', function() {
+        $markStunnedModal.addClass('hidden');
+    });
+
+    $('#apply-mark-stunned').on('click', function() {
+        const mobIndex = $markStunnedModal.data('mob-index');
+        const numStunned = parseInt($('#num-stunned').val(), 10);
+        if (isNaN(numStunned)) return;
+
+        const mob = mobs[mobIndex];
+        mob.numStunned = numStunned;
+
+        saveState();
+        $markStunnedModal.addClass('hidden');
         renderMobs();
     });
 
@@ -218,7 +248,9 @@ $(document).ready(function() {
         const attackResults = [];
         const damageDice = parseDiceString(mob.damagePerAttack);
 
-        for (let i = 0; i < mob.numAlive; i++) {
+        const numAttacking = mob.numAlive - (mob.numStunned || 0);
+
+        for (let i = 0; i < numAttacking; i++) {
             for (let j = 0; j < mob.attacksPerCreature; j++) {
                 let roll1 = Math.floor(Math.random() * 20) + 1;
                 let roll2 = Math.floor(Math.random() * 20) + 1;
@@ -267,6 +299,7 @@ $(document).ready(function() {
         $('#edit-attacks-per-creature').val(mob.attacksPerCreature);
         $('#edit-damage-per-attack').val(mob.damagePerAttack);
         $('#edit-healths').val(mob.healths.join(', '));
+        $('#edit-num-stunned').val(mob.numStunned || 0);
 
         $editMobModal.removeClass('hidden');
     });
@@ -286,6 +319,7 @@ $(document).ready(function() {
         mob.attackModifier = parseInt($('#edit-attack-modifier').val(), 10);
         mob.attacksPerCreature = parseInt($('#edit-attacks-per-creature').val(), 10);
         mob.damagePerAttack = $('#edit-damage-per-attack').val();
+        mob.numStunned = parseInt($('#edit-num-stunned').val(), 10) || 0;
         
         const healthsString = $('#edit-healths').val();
         mob.healths = healthsString.split(',').map(h => parseInt(h.trim(), 10));
@@ -298,10 +332,8 @@ $(document).ready(function() {
     });
 
     $('#reroll-health').on('click', function() {
-        const mobIndex = $editMobModal.data('mob-index');
-        const mob = mobs[mobIndex];
-        const healthPerCreature = mob.healthPerCreature;
-        const numAlive = mob.healths.length;
+        const healthPerCreature = $('#edit-health-per-creature').val();
+        const numAlive = parseInt($('#edit-num-alive').val(), 10);
 
         const newHealths = [];
         for (let i = 0; i < numAlive; i++) {
