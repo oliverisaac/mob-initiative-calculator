@@ -16,13 +16,13 @@ $(document).ready(function() {
 
     // Parses a dice string like "XdY+Z" and returns the roll.
     function parseDiceString(diceString) {
-        const match = diceString.match(/(\d+)d(\d+)(?:\\+(\d+))?/);
+        const match = diceString.match(/(\d+)d(\d+)(?:\+(\d+))?/);
         if (!match) return null;
 
         return {
             numDice: parseInt(match[1], 10),
             dieType: parseInt(match[2], 10),
-            modifier: match[3] ? parseInt(match[3], 10) : 0
+            modifier: match[4] ? parseInt(match[4], 10) : 0
         };
     }
 
