@@ -19,31 +19,37 @@
 
         <!-- Mob Creator Form -->
         <div id="mob-creator" class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">Create a Mob</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Create a Mob</h2>
+                <button id="toggle-mob-creator" class="text-white">
+                    <svg id="chevron-up" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                    <svg id="chevron-down" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+            </div>
             <form id="mob-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label for="creature" class="block mb-2">Creature Name</label>
-                    <input type="text" id="creature" placeholder="Zombies" name="creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <label for="creature" class="block mb-2">Creature</label>
+                    <input type="text" id="creature" name="creature" placeholder="Zombies" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="num-alive" class="block mb-2">Num Alive</label>
-                    <input type="number" id="num-alive" placeholder="20" name="num-alive" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="num-alive" name="num-alive" placeholder="20" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
-                    <label for="health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+3)</label>
-                    <input type="text" id="health-per-creature" placeholder="2d8+3" name="health-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <label for="health-per-creature" class="block mb-2">Health Per Creature (e.g., 2d8+2)</label>
+                    <input type="text" id="health-per-creature" name="health-per-creature" placeholder="2d8+3" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="attack-modifier" class="block mb-2">Attack Modifier</label>
-                    <input type="number" id="attack-modifier" placeholder="6" name="attack-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="attack-modifier" name="attack-modifier" placeholder="6" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="attacks-per-creature" class="block mb-2">Attacks Per Creature</label>
-                    <input type="number" id="attacks-per-creature" placeholder="1" name="attacks-per-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="number" id="attacks-per-creature" name="attacks-per-creature" placeholder="1" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div>
                     <label for="damage-per-attack" class="block mb-2">Damage Per Attack (e.g., 1d10+3)</label>
-                    <input type="text" id="damage-per-attack" placeholder="1d10+3" name="damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
+                    <input type="text" id="damage-per-attack" name="damage-per-attack" placeholder="1d10+3" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                 </div>
                 <div class="md:col-span-2">
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Mob</button>

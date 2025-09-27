@@ -69,6 +69,12 @@ $(document).ready(function() {
         });
     }
 
+    $('#toggle-mob-creator').on('click', function() {
+        $('#mob-form').toggleClass('hidden');
+        $('#chevron-up').toggleClass('hidden');
+        $('#chevron-down').toggleClass('hidden');
+    });
+
     // Handle mob creation form submission
     $('#mob-form').on('submit', function(event) {
         event.preventDefault();
