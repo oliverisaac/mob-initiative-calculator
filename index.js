@@ -351,6 +351,16 @@ $(document).ready(function() {
         $('#edit-healths').val(newHealths.join(', '));
     });
 
+    $(document).on('keydown', function(event) {
+        if (event.key === "Escape") {
+            $('#damage-modal').addClass('hidden');
+            $('#saving-throw-modal').addClass('hidden');
+            $('#attack-modal').addClass('hidden');
+            $('#edit-mob-modal').addClass('hidden');
+            $('#mark-stunned-modal').addClass('hidden');
+        }
+    });
+
     // Initial load
     loadState();
     renderMobs();
