@@ -76,7 +76,7 @@
 
     <!-- Damage Modal -->
     <div id="damage-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-1/2 lg:w-1/3">
             <h2 class="text-2xl font-bold mb-4">Deal Damage</h2>
             <div class="mb-4">
                 <label for="damage-amount" class="block mb-2">Damage Amount</label>
@@ -91,9 +91,9 @@
 
     <!-- Saving Throw Modal -->
     <div id="saving-throw-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-1/2 lg:w-1/3">
             <h2 class="text-2xl font-bold mb-4">Saving Throw</h2>
-            <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label for="save-modifier" class="block mb-2">Save Modifier</label>
                     <input type="number" id="save-modifier" name="save-modifier" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
@@ -113,9 +113,9 @@
 
     <!-- Attack Modal -->
     <div id="attack-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-1/3">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-1/2 lg:w-1/3">
             <h2 class="text-2xl font-bold mb-4">Attack</h2>
-            <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label for="attack-ac" class="block mb-2">Target AC</label>
                     <input type="number" id="attack-ac" name="attack-ac" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
@@ -139,10 +139,10 @@
 
     <!-- Edit Mob Modal -->
     <div id="edit-mob-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-1/2">
             <h2 class="text-2xl font-bold mb-4">Edit Mob</h2>
             <form id="edit-mob-form">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="edit-creature" class="block mb-2">Creature</label>
                         <input type="text" id="edit-creature" name="edit-creature" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
@@ -167,13 +167,14 @@
                         <label for="edit-damage-per-attack" class="block mb-2">Damage Per Attack (e.g., 1d10+3)</label>
                         <input type="text" id="edit-damage-per-attack" name="edit-damage-per-attack" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                     </div>
-                    <div class="md:col-span-2">
+                    <div class="sm:col-span-2">
                         <label for="edit-healths" class="block mb-2">Healths (comma-separated)</label>
                         <input type="text" id="edit-healths" name="edit-healths" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2">
                     </div>
                 </div>
                 <div class="flex justify-end mt-4">
                     <button type="button" id="cancel-edit-mob" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
+                    <button type="button" id="reroll-health" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Re-roll Health</button>
                     <button type="submit" id="save-mob-changes" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
                 </div>
             </form>

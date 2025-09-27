@@ -1,2 +1,4 @@
 - [x] Add a way to edit an existing mob. Use a modal so I can edit the mob, the health of the creatures, and the damage
 - [x] when you calcualte the damage make sure to add the damagne modifier. E..g 1d6+5 should add 5 points of damage to the d6 that was rolled
+- [x] In the edit modal, add a re-roll button so that I cna re-roll the health of the creatures
+- [x] Update the modals so that they work well on smaller screens. They are too small and cramped when I open them in a narrow window

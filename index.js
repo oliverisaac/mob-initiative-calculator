@@ -297,6 +297,20 @@ $(document).ready(function() {
         $editMobModal.addClass('hidden');
     });
 
+    $('#reroll-health').on('click', function() {
+        const mobIndex = $editMobModal.data('mob-index');
+        const mob = mobs[mobIndex];
+        const healthPerCreature = mob.healthPerCreature;
+        const numAlive = mob.healths.length;
+
+        const newHealths = [];
+        for (let i = 0; i < numAlive; i++) {
+            newHealths.push(rollDice(healthPerCreature));
+        }
+
+        $('#edit-healths').val(newHealths.join(', '));
+    });
+
     // Initial load
     loadState();
     renderMobs();
