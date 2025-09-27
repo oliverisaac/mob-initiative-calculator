@@ -12,6 +12,25 @@ $(document).ready(function() {
         if (savedMobs) {
             mobs = JSON.parse(savedMobs);
         }
+
+        if (mobs.length === 0) {
+            const healths = [];
+            for (let i = 0; i < 20; i++) {
+                healths.push(rollDice('2d8+3'));
+            }
+
+            mobs.push({
+                creature: 'Zombies',
+                numAlive: 20,
+                healths: healths,
+                healthPerCreature: '2d8+3',
+                attackModifier: 6,
+                attacksPerCreature: 1,
+                damagePerAttack: '1d10+3',
+                numStunned: 0
+            });
+            saveState();
+        }
     }
 
     // Parses a dice string like "XdY+Z" and returns the roll.

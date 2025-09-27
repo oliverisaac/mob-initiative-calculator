@@ -34,3 +34,5 @@ When the attack button is pressed, a modal should pop up where I can enter the A
 Make sure the website is done in dark mode using tailwindcss. Make sure it is responsive. Make sure it looks good.
 
 As you make progress in the plan, update the file gemini-plan.md with what steps you have done so far
+
+Make sure to update the default data state if you add new data fields
